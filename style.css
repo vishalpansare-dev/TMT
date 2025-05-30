@@ -1,0 +1,70 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background: #f9f9f9;
+}
+h1 {
+    text-align: center;
+}
+#excelFile, #importBtn, #generateReportBtn {
+    margin: 10px 0;
+    display: block;
+}
+#tableContainer {
+    overflow-x: auto;
+    margin-top: 20px;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+    background: #fff;
+}
+table tr, .steps-table tr {
+    background: #fff;
+}
+th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+th {
+    background: #f0f0f0;
+}
+input[type="text"] {
+    width: 100%;
+    box-sizing: border-box;
+}
+.screenshot-img {
+    max-width: 100px;
+    max-height: 60px;
+    display: block;
+}
+select {
+    width: 100%;
+}
+.passed {
+    background: #d4edda !important;
+}
+.failed {
+    background: #f8d7da !important;
+}
+.skipped {
+    background: #fff3cd !important;
+}
+.steps-table {
+    margin: 8px 0;
+    width: 100%;
+    background: #f9f9f9;
+}
+.steps-table th, .steps-table td {
+    font-size: 13px;
+    border: 1px solid #ddd;
+    padding: 4px 6px;
+}
+.steps-table th {
+    background: #f5f5f5;
+}
+.compactView table, .compactView th, .compactView td, .compactView .steps-table th, .compactView .steps-table td {
+    padding: 2px 4px !important;
+    font-size: 12px !important;
+}
