@@ -1,4 +1,4 @@
-# Manual Test Execution Tool
+# TestEase Manual Execution Tool
 
 A web-based tool for manual test execution using only HTML, CSS, and JavaScript (no frameworks or build tools).
 
