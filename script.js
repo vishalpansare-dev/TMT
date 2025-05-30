@@ -216,15 +216,33 @@ function parseExcelWithMapping() {
         const sheet = workbook.Sheets[workbook.SheetNames[0]];
         const json = XLSX.utils.sheet_to_json(sheet, { defval: '' });
         testCases = json.map(row => {
-            const steps = (row[columnMapping['Test Steps']] || '').split(/\r?\n/).filter(Boolean);
-            const expected = (row[columnMapping['Expected Results']] || '').split(/\r?\n/).filter(Boolean);
-            const stepObjs = steps.map((step, idx) => ({
-                step: step,
-                expected: expected[idx] || '',
-                actual: '',
-                screenshot: '',
-                result: ''
-            }));
+            // Enhanced step parsing for numbered steps and expected results
+            const stepsRaw = row[columnMapping['Test Steps']] || '';
+            // Split by regex: new step starts with number and parenthesis, e.g., 1) or 2)
+            const stepBlocks = stepsRaw.split(/(?=\n?\d+\))/g).map(s => s.trim()).filter(Boolean);
+            let stepObjs = [];
+            stepBlocks.forEach(block => {
+                // Split block into lines
+                const lines = block.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+                let stepText = '';
+                let expected = '';
+                lines.forEach(line => {
+                    if (/^Expected result[:：]/i.test(line)) {
+                        expected += (expected ? ' ' : '') + line.replace(/^Expected result[:：]/i, '').trim();
+                    } else {
+                        stepText += (stepText ? ' ' : '') + line;
+                    }
+                });
+                if (stepText) {
+                    stepObjs.push({
+                        step: stepText,
+                        expected: expected,
+                        actual: '',
+                        screenshot: '',
+                        result: ''
+                    });
+                }
+            });
             return {
                 'Test Case ID': row[columnMapping['Test Case ID']] || '',
                 'Name': row[columnMapping['Name']] || '',
